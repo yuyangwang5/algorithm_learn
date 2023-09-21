@@ -117,9 +117,98 @@ bool bruteForcePrimalityTest(int n) {
 	return true;
 }
 
+// 1.8 count1, n为2的整数次幂
+int count1(int n) {
+	int cnt = 0;
+	while (n >= 1) {
+		for (int j = 0;j < n;++j) {
+			cnt++;
+		}
+		n >>= 1;
+	}
+	return cnt;
+}
+
+// 1.9 count2 
+int count2(int n) {
+	int cnt = 0;
+	for (int i = 0;i < n;++i) {
+		for (int j = 0;j < n / (i + 1);++j) {
+			cnt++;
+		}
+	}
+	return cnt;
+}
+
+// 1.10 count3，n=2^(2^k)
+int count3(int n) {
+	int cnt = 0;
+	for (int i = 1; i <= n;++i) {
+		int j = 2;
+		while (j <= n) {
+			j = j * j;
+			cnt++;
+		}
+	}
+	return cnt;
+}
+
+// 1.11 PSUM n为1个完全平方数
+vector<int> psum(int n) {
+	vector<int> sum;
+	for (int j = 1; j * j <= n; ++j) {
+		sum.push_back(0);
+		for (int i = 1; i <= j * j;++i) {
+			sum[j - 1] += i;
+		}
+	}
+	return sum;
+}
+
+// 1.12 修改后的插入排序，查找过程改为二分查找
+void modInsertionSort(vector<int>& a) {
+	for (int i = 1; i < a.size(); ++i) {
+		int l = 0, r = i;
+		// 寻找第一个大于当前位置值的下标
+		while (l < r) {
+			int mid = (l + r) >> 1;
+			if (a[mid] <= a[i]) {
+				l = mid + 1;
+			}
+			else {
+				r = mid;
+			}
+		}
+		int tmp = a[i], p = i;
+		while (p > l) {
+			a[p] = a[p - 1];
+			p--;
+		}
+		a[p] = tmp;
+	}
+}
+
+// 1.13 first
+int first(vector<int>& a) {
+	int sum = 0;
+	for (int i = 0;i < a.size();++i) {
+		sum += a[i];
+	}
+	return sum;
+}
+
+// 1.14 second
+int second(int n) {
+	int sum = 0;
+	for (int i = 0;i < n;++i) {
+		sum += i;
+	}
+	return sum;
+}
+
 int main() {
 	vector<int> a = { 3, 5,1,7,8,5,3,0,5 };
-	bottomupSort1(a);
+	modInsertionSort(a);
 	for (auto e : a) {
 		cout << e << " ";
 	}
